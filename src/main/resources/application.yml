@@ -1,0 +1,95 @@
+# ========================
+# SERVER CONFIGURATION
+# ========================
+server:
+  port: 8080
+  tomcat:
+    threads:
+      max: 500
+    max-connections: 1000
+  shutdown: graceful
+
+# ========================
+# DATABASE CONFIGURATION
+# ========================
+spring:
+  application:
+    name: ms-api-redis-cache
+  jackson:
+    default-property-inclusion: non-empty
+    property-naming-strategy: SNAKE_CASE
+    serialization:
+      indent-output: false
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    hikari:
+      minimum-idle: 1
+      maximum-pool-size: 1
+      connection-timeout: 10000
+      max-lifetime: 1800000
+      idle-timeout: 600000
+      pool-name: ConnectionPool
+      schema: PUBLIC
+  jpa:
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        '[format_sql]': false
+        '[default_batch_fetch_size]': 16
+        '[order_inserts]': true
+        '[order_updates]': true
+        '[batch_versioned_data]': false
+        '[generate_statistics]': false
+        '[use_sql_comments]': false
+        jdbc:
+          '[fetch_size]': 50
+          '[batch_size]': 30
+  h2:
+    console:
+      enabled: true
+
+  task:
+    execution:
+      pool:
+        core-size: 8                          # or 2× CPU cores for IO-heavy apps
+        max-size: 16                          # or 4× cores if needed
+        queue-capacity: 100                   # Depends on expected load
+        keep-alive: 60s                       # Scale down resources during low activity 30s ~ 60s
+        allow-core-thread-timeout: false      # If scale down Core threads during low activity
+      thread-name-prefix: "MgdAsync-"
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      connect-timeout:  5000
+      timeout: 30000
+      password:
+      client-type: jedis
+      ssl:
+        enabled: false
+      jedis:
+        pool:
+          enabled: true
+          max-idle: 10
+          min-idle: 10
+          max-active: 10
+          max-wait: 10000
+          time-between-eviction-runs: 120000
+  cache:
+    type: redis
+    redis:
+      time-to-live: 86400000   # 1 day in milliseconds
+      cache-null-values: false
+      use-key-prefix: true
+      key-prefix: "${spring.application.name}:"
+
+app:
+  settings:
+    data-tx-id: X00001
+    data-tx-name: XName

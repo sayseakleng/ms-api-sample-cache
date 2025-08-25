@@ -1,0 +1,42 @@
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+tab_width = 2
+charset = latin1
+
+[*.java]
+indent_style = space
+indent_size = 4
+tab_width = 4
+charset = latin1
+
+[*.config]
+charset = latin1
+
+[*.properties]
+charset = utf-8
+
+[*.{kts,gradle,toml}]
+indent_style = space
+indent_size = 4
+tab_width = 4
+charset = latin1
+
+[.{gitattributes,editorconfig,gitignore}]
+indent_style = space
+indent_size = 4
+tab_width = 4
+charset = latin1
+
+[*.xml]
+indent_style = space
+indent_size = 2
+tab_width = 2
+charset = utf-8
