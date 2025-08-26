@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public UserCreationResponseVo register(@PathVariable Long userId) throws InterruptedException, ExecutionException {
+    public UserCreationResponseVo getUserByUserId(@PathVariable Long userId) throws InterruptedException, ExecutionException {
         UserResultDto userResultDto = userService.getUserByUserId(userId);
         log.debug("Result: {}", userResultDto);
         return userVoMapper.from(userResultDto);
